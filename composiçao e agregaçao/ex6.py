@@ -13,7 +13,7 @@ class Casa:
 
     def listar_comodos(self):
         for comodo in self.lista_de_comodos:
-            print(f"O {comodo.nome} tem o tamanho {comodo.tamanho} m²")
+            print(f"O {comodo.nome} tem o tamanho {comodo.tamanho} metros quadrados")
 
 casa=Casa()
 casa.adicionar_comodo("Quarto",56)  

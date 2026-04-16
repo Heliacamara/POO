@@ -5,27 +5,28 @@ class ItemPedido:
         self.preco:int=preco
 
     def __str__(self):
-        return f"O produto: {self.produto}, Quantidade: {self.quantidade},Preco:{self.preco}"
+        return f"O produto: {self.produto}; Quantidade: {self.quantidade}; Preco: {self.preco}"
+
 class Pedido:
     def __init__(self):
         self.lista_de_itens=[]
-    
-    def adicionar_item(self, item):
+
+    def adicionar_item(self,produto,quantidade,preco):
+        item=ItemPedido(produto,quantidade,preco)
         self.lista_de_itens.append(item)
 
     def calcular_total(self):
         soma_total=0
         for produto in self.lista_de_itens:
-            soma_total+= produto.preco
-        print(f"A soma dos itens:{soma_total}")
+            soma_total += produto.preco * produto.quantidade
+        print(f"A soma dos produtos: {soma_total}")
 
     def mostrar(self):
         for item in self.lista_de_itens:
-            print(f"{item}")                                    
-ob1=ItemPedido("Carro",1,100.000)        
-ob2=ItemPedido("Casa",2,150.000)
-pedi=Pedido()
-pedi.adicionar_item(ob1)
-pedi.adicionar_item(ob2)
+            print(item)
+
+pedi = Pedido()
+pedi.adicionar_item("Carro", 1, 100000)
+pedi.adicionar_item("Casa", 2, 150000)
 pedi.mostrar()
-pedi.calcular_total( )
+pedi.calcular_total()

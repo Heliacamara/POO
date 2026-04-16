@@ -18,7 +18,7 @@ class Biblioteca:
         for livro in self.lista_de_livros:
             print(f"A biblioteca {self.nome}  tem o livro {livro}")   
 
-l1=Livro("O ursinho","Hélia")
+l1=Livro("O ursinho","Helia")
 l2=Livro("A borboletinha na cozinha","Vitinho")
 bibli=Biblioteca("Chica doida") 
 bibli.adicionar_livros(l1)

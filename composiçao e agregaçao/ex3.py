@@ -7,6 +7,6 @@ class Livro:
         self.livro=livro
         self.autor= Autor(autor)
     def __str__(self):
-        return f"O nome do livro é {self.livro} e seu autor é {self.autor.autor}"
-livro= Livro("O bananão","Vitini")
+        return f"O nome do livro: {self.livro} e seu autor:  {self.autor.autor}"
+livro= Livro("O bananao","Vitini")
 print(livro)

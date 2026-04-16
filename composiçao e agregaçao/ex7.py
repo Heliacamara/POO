@@ -14,7 +14,7 @@ class Computador:
 
 
     def exibir_configuracao(self):
-        print(f"O modelo {self.processador.modelo} tem a velocidade {self.processador.velocidade} tem a memoria {self.memoria.capacidade} RAM")
+        print(f"O modelo {self.processador.modelo} tem a velocidade {self.processador.velocidade} e a memoria {self.memoria.capacidade} RAM")
         
 obj1=Computador("Ryzen 7",4.7,16)
 obj1.exibir_configuracao()
