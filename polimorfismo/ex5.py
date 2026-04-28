@@ -11,7 +11,7 @@ class Circulo(Forma):
         self.raio=raio
 
     def calcular_area(self):
-        return math.pi * self.raio * self.raio
+        return math.pi * self.raio ** 2
 
 class Retangulo(Forma):
     def __init__(self,base,altura):
@@ -31,5 +31,5 @@ class Triangulo(Forma):
 
 formas=[Circulo(2),Retangulo(2, 4),Triangulo(5, 10)]
 
-for f in formas:
-    print(f.calcular_area())
+for resultado in formas:
+    print(resultado.calcular_area())

@@ -11,9 +11,6 @@ class Gato(Animal):
         return "Miado"
     
 animals= [Cachorro(),Gato(),Animal()]
-#for animal in animals:
-    #print(animal.emitir_som())
 
-print(animals[0].emitir_som())
-print(animals[1].emitir_som())
-print(animals[2].emitir_som())
+for animal in animals:
+    print(animal.emitir_som())
