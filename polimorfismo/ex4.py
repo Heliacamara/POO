@@ -15,3 +15,7 @@ class Bicicleta(Veiculo):
         return "Bicicleta se movendo"
 
 
+veiculos= [Carro(),Moto(),Bicicleta()]
+
+for diversos in veiculos:
+    print(diversos.mover())
