@@ -81,4 +81,8 @@ print(emprestimo1.membro.nome)
 #print(emprestimo1.membro.nome)
 
 
-#É um exemplo de agregação pois a classe Emprestimo utiliza objetos das classes Livro e Membro,mas eles continuam existindo independentemente do emprestimo,podem existir em seus particular
+## É um exemplo de agregação porque a classe Emprestimo
+# utiliza objetos das classes Livro e Membro,
+# mas eles continuam existindo independentemente do empréstimo.
+# Mesmo que o empréstimo seja removido,
+# os objetos Livro e Membro continuam existindo.
