@@ -10,12 +10,10 @@ class PessoaClinica(ABC):
     def get_identificacao(self):
         pass
 
-
 class Paciente:
     def __init__(self, nome, cpf):
         self.nome = nome
         self.cpf = cpf
-
 
 class Medico(PessoaClinica):
     def __init__(self, nome, crm):

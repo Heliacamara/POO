@@ -13,7 +13,7 @@ class Medico:
         self.crm=crm
         self.especialidade=especialidade
 
-p1=Pessoa("Helia","18767898545",15)
+p1=Paciente("Helia","18767898545",15)
 print(p1.exibir_dados())
 
 #__init__: é um método especial chamado automaticamente quando um objeto é criado. Ele serve para inicializar os atributos da classe, ou seja, definir os valores iniciais do objeto.
