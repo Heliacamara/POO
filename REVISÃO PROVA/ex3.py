@@ -12,15 +12,30 @@ class Livro:
 class Membro:
     def __init__(self,nome,id_membro,contato):
         self.nome=nome
-        self.id_membro=id_membro
+        self.__id_membro=id_membro
         self.contato=contato
+
+    @property
+    def id_membro(self):
+        return self.__id_membro
+
+    @id_membro.setter
+    def id_membro(self,idmembro):
+        if idmembro<0:
+            print("Nao pode ser atribuido ao id valores negativos")
+        else:
+            self.__id_membro=idmembro
+
+    def __str__(self):
+        return (f"Quem pegou o livro: {self.nome} |Id_membro: {self.id_membro}")
+        
 
     def exibir_detalhes(self):
         print(f"Quem pegou o livro: {self.nome}") 
         print(f"Id_membro: {self.id_membro}")
         print(f"Contato de quem pegou o livro: {self.contato}")
 
-l1=Livro("O misterio do verde nasce","Ana Claudia Trigueiro",34)
-l1.exibir_detalhes()
-p1=Membro("Hélia",12345,"camarahehe@gmail.com")
-p1.exibir_detalhes()
+p1=Membro("Helia",10,"helia@gmail.com")
+print(p1)
+p1.id_membro=-5
+print(p1)
