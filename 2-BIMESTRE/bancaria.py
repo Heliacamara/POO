@@ -1,11 +1,26 @@
 import tkinter as tk
 from tkinter import messagebox, simpledialog
+from collections import Counter
 
 class ContaBancaria:
+    numeros_contas=[]
+    contas_duplicadas=[]
+
     def __init__(self,titular,numero,saldo):
         self.__tiular=titular
         self.__numero=numero
         self.__saldo=saldo
+        ContaBancaria.numeros_contas.append(numero)
+
+    @classmethod
+    def verificar_conta(cls):
+        return len(cls.numeros_contas) != len(set(cls.numeros_contas))
+    
+    @classmethod
+    def verificar_contas_duplicadas(cls,lista):
+        contagem=Counter(lista)
+        duplicados = [item for item, quantidade in contagem.items() if quantidade > 1]
+        return duplicados
 
     @property
     def titular(self):
@@ -38,8 +53,14 @@ class BancoApp:
             ContaBancaria("João", 1001, 500),
             ContaBancaria("Maria", 1002, 1000),
             ContaBancaria("Pedro", 1003, 300),
-            ContaBancaria("Esther", 1004, 20)
+            ContaBancaria("Esther", 1004, 20),
+            ContaBancaria("Valeria", 1001, 500)
         ]
+
+        if(self.contas[0].verificar_conta()):
+            messagebox.showinfo("contas",self.contas[0].contas_duplicadas())
+            exit()
+          
 
         self.criar_interface()
 
