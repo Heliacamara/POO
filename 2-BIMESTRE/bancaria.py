@@ -1,13 +1,12 @@
 import tkinter as tk
 from tkinter import messagebox, simpledialog
-from collections import Counter
 
 class ContaBancaria:
     numeros_contas=[]
     contas_duplicadas=[]
 
     def __init__(self,titular,numero,saldo):
-        self.__tiular=titular
+        self.__titular=titular
         self.__numero=numero
         self.__saldo=saldo
         ContaBancaria.numeros_contas.append(numero)
@@ -17,14 +16,16 @@ class ContaBancaria:
         return len(cls.numeros_contas) != len(set(cls.numeros_contas))
     
     @classmethod
-    def verificar_contas_duplicadas(cls,lista):
-        contagem=Counter(lista)
-        duplicados = [item for item, quantidade in contagem.items() if quantidade > 1]
+    def verificar_contas_duplicadas(cls):
+        duplicados=[]
+        for item in cls.numeros_contas:
+            if cls.numeros_contas.count(item) > 1 and item not in duplicados:
+                duplicados.append(item)
         return duplicados
 
     @property
     def titular(self):
-        return self.__tiular
+        return self.__titular
 
     @property
     def numero(self):
@@ -42,6 +43,17 @@ class ContaBancaria:
     
     def get_saldo(self):
         return self.saldo
+    
+
+    def exibir_dados(self):
+        return f"O titular:{self.__titular} de numero {self.__numero} possui {self.__saldo} em sua conta."
+    
+    def sacar(self):
+        if
+    def depositar(self):
+        pass
+    def transferir(self):
+        pass
 
 class BancoApp:
     def __init__(self, janela):
@@ -53,14 +65,14 @@ class BancoApp:
             ContaBancaria("João", 1001, 500),
             ContaBancaria("Maria", 1002, 1000),
             ContaBancaria("Pedro", 1003, 300),
-            ContaBancaria("Esther", 1004, 20),
-            ContaBancaria("Valeria", 1001, 500)
+            ContaBancaria("Esther", 1004, 20)
         ]
 
-        if(self.contas[0].verificar_conta()):
-            messagebox.showinfo("contas",self.contas[0].contas_duplicadas())
-            exit()
           
+        if self.contas[0].verificar_conta():
+            duplicados = ContaBancaria.verificar_contas_duplicadas()
+            messagebox.showinfo("Contas Duplicadas", f"Contas duplicadas encontradas: {duplicados}")
+            exit()
 
         self.criar_interface()
 
@@ -117,7 +129,7 @@ class BancoApp:
                 width=15,
                 command=lambda c=conta: self.depositar(c)
             )
-            btn_depositar.config(state="disabled")
+            btn_depositar.config(state="active")
             btn_depositar.pack(pady=2)
 
             btn_sacar = tk.Button(
@@ -126,7 +138,7 @@ class BancoApp:
                 width=15,
                 command=lambda c=conta: self.sacar(c)
             )
-            btn_sacar.config(state="disabled")
+            btn_sacar.config(state="active")
             btn_sacar.pack(pady=2)
 
             btn_transferir = tk.Button(
@@ -135,7 +147,7 @@ class BancoApp:
                 width=15,
                 command=lambda c=conta: self.transferir(c)
             )
-            btn_transferir.config(state="disabled")
+            btn_transferir.config(state="active")
             btn_transferir.pack(pady=2)
 
             btn_dados = tk.Button(
@@ -144,7 +156,7 @@ class BancoApp:
                 width=15,
                 command=lambda c=conta: self.exibir_dados(c)
             )
-            btn_dados.config(state="disabled")
+            btn_dados.config(state="active")
             btn_dados.pack(pady=2)
 
     def depositar(self, conta):
