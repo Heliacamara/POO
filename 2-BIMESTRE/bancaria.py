@@ -46,14 +46,26 @@ class ContaBancaria:
     
 
     def exibir_dados(self):
-        return f"O titular:{self.__titular} de numero {self.__numero} possui {self.__saldo} em sua conta."
+         return f"Titular: {self.__titular}, Conta: {self.__numero}, Saldo: {self.__saldo}"
     
-    def sacar(self):
-        if
-    def depositar(self):
-        pass
-    def transferir(self):
-        pass
+    def depositar(self, valor):
+        if valor > 0:
+            self.__saldo += valor
+            return True
+        return False
+
+    def sacar(self, valor):
+        if valor > 0 and self.__saldo >= valor:
+            self.__saldo -= valor
+            return True
+        return False
+
+    def transferir(self, valor, conta_destino):
+        if valor > 0 and self.__saldo >= valor:
+            self.__saldo -= valor
+            conta_destino.depositar(valor)
+            return True
+        return False
 
 class BancoApp:
     def __init__(self, janela):
