@@ -1,71 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox, simpledialog
-
-class ContaBancaria:
-    numeros_contas=[]
-    contas_duplicadas=[]
-
-    def __init__(self,titular,numero,saldo):
-        self.__titular=titular
-        self.__numero=numero
-        self.__saldo=saldo
-        ContaBancaria.numeros_contas.append(numero)
-
-    @classmethod
-    def verificar_conta(cls):
-        return len(cls.numeros_contas) != len(set(cls.numeros_contas))
-    
-    @classmethod
-    def verificar_contas_duplicadas(cls):
-        duplicados=[]
-        for item in cls.numeros_contas:
-            if cls.numeros_contas.count(item) > 1 and item not in duplicados:
-                duplicados.append(item)
-        return duplicados
-
-    @property
-    def titular(self):
-        return self.__titular
-
-    @property
-    def numero(self):
-        return self.__numero
-    
-    @property
-    def saldo(self):
-        return self.__saldo
-    
-    def get_titular(self):
-        return self.titular
-
-    def get_numero(self):
-        return self.numero
-    
-    def get_saldo(self):
-        return self.saldo
-    
-
-    def exibir_dados(self):
-         return f"Titular: {self.__titular}, Conta: {self.__numero}, Saldo: {self.__saldo}"
-    
-    def depositar(self, valor):
-        if valor > 0:
-            self.__saldo += valor
-            return True
-        return False
-
-    def sacar(self, valor):
-        if valor > 0 and self.__saldo >= valor:
-            self.__saldo -= valor
-            return True
-        return False
-
-    def transferir(self, valor, conta_destino):
-        if valor > 0 and self.__saldo >= valor:
-            self.__saldo -= valor
-            conta_destino.depositar(valor)
-            return True
-        return False
+from ContaBancaria import Cliente,ContaBancaria,Endereço
 
 class BancoApp:
     def __init__(self, janela):
@@ -73,17 +8,21 @@ class BancoApp:
         self.janela.title("Sistema Bancário - POO em Python")
         self.janela.geometry("850x400")
 
+        cliente1 = Cliente('Helia', '164.913', Endereço("Rua zumbi", "834", "centro", "Ceara-mirim"))
+        cliente2 = Cliente('Vitor', '124.248', Endereço("Rua Lagos", "29", "centro", "Ceara-mirim"))
+        cliente3 = Cliente('Giovanna', '943.135', Endereço("Rua Mosquito", "128", "centro", "Ceara-mirim"))
+        cliente4 = Cliente('Bernardo', '517.925', Endereço("Rua do Farol", "724", "centro", "Ceara-mirim"))
+
         self.contas = [
-            ContaBancaria("João", 1001, 500),
-            ContaBancaria("Maria", 1002, 1000),
-            ContaBancaria("Pedro", 1003, 300),
-            ContaBancaria("Esther", 1004, 20)
+            ContaBancaria(cliente1, 1001, 500),
+            ContaBancaria(cliente2, 1002, 1000),
+            ContaBancaria(cliente3, 1003, 300),
+            ContaBancaria(cliente4, 1004, 20)
         ]
 
-          
-        if self.contas[0].verificar_conta():
-            duplicados = ContaBancaria.verificar_contas_duplicadas()
-            messagebox.showinfo("Contas Duplicadas", f"Contas duplicadas encontradas: {duplicados}")
+        if(self.contas[0].verificar_conta_duplicada()):
+            messagebox.showerror("Erro", "Existe conta duplicada")
+            messagebox.showinfo("contas", self.contas[0].contas_duplicadas())
             exit()
 
         self.criar_interface()
@@ -141,7 +80,7 @@ class BancoApp:
                 width=15,
                 command=lambda c=conta: self.depositar(c)
             )
-            btn_depositar.config(state="active")
+            # btn_depositar.config(state="disabled")
             btn_depositar.pack(pady=2)
 
             btn_sacar = tk.Button(
@@ -150,7 +89,7 @@ class BancoApp:
                 width=15,
                 command=lambda c=conta: self.sacar(c)
             )
-            btn_sacar.config(state="active")
+            # btn_sacar.config(state="disabled")
             btn_sacar.pack(pady=2)
 
             btn_transferir = tk.Button(
@@ -159,7 +98,7 @@ class BancoApp:
                 width=15,
                 command=lambda c=conta: self.transferir(c)
             )
-            btn_transferir.config(state="active")
+            # btn_transferir.config(state="disabled")
             btn_transferir.pack(pady=2)
 
             btn_dados = tk.Button(
@@ -168,8 +107,29 @@ class BancoApp:
                 width=15,
                 command=lambda c=conta: self.exibir_dados(c)
             )
-            btn_dados.config(state="active")
+            # btn_dados.config(state="disabled")
             btn_dados.pack(pady=2)
+            
+            # btn_dados.config(state="disabled")
+            btn_dados.pack(pady=2)
+
+            btn_rendimento = tk.Button(
+                frame,
+                text="Render Juros",
+                width=15,
+                command=lambda c=conta: self.render_juros(c)
+            )
+            btn_rendimento.config(state="disabled")
+            btn_rendimento.pack(pady=2)
+
+            btn_taxa = tk.Button(
+                frame,
+                text="Cobrar Taxa",
+                width=15,
+                command=lambda c=conta: self.cobrar_taxa(c)
+            )
+            btn_taxa.config(state="disabled")
+            btn_taxa.pack(pady=2)
 
     def depositar(self, conta):
         valor = simpledialog.askfloat("Depósito", "Digite o valor do depósito:")
