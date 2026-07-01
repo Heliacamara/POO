@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox, simpledialog
-from ContaBancaria import Cliente,ContaBancaria,Endereço
+from ContaBancaria import Cliente,ContaBancaria,Endereço,ContaCorrente
 
 class BancoApp:
     def __init__(self, janela):
@@ -14,7 +14,7 @@ class BancoApp:
         cliente4 = Cliente('Bernardo', '517.925', Endereço("Rua do Farol", "724", "centro", "Ceara-mirim"))
 
         self.contas = [
-            ContaBancaria(cliente1, 1001, 500),
+            ContaCorrente(cliente1, 1001, 500,200,50),
             ContaBancaria(cliente2, 1002, 1000),
             ContaBancaria(cliente3, 1003, 300),
             ContaBancaria(cliente4, 1004, 20)
@@ -119,7 +119,7 @@ class BancoApp:
                 width=15,
                 command=lambda c=conta: self.render_juros(c)
             )
-            btn_rendimento.config(state="disabled")
+            #btn_rendimento.config(state="disabled")
             btn_rendimento.pack(pady=2)
 
             btn_taxa = tk.Button(
@@ -128,7 +128,7 @@ class BancoApp:
                 width=15,
                 command=lambda c=conta: self.cobrar_taxa(c)
             )
-            btn_taxa.config(state="disabled")
+            #btn_taxa.config(state="disabled")
             btn_taxa.pack(pady=2)
 
     def depositar(self, conta):

@@ -109,15 +109,24 @@ class ContaCorrente(ContaBancaria):
         self.__limite=limite
         self.__tarifa_mensal=tarifa_mensal
 
-    def sacar(self):
-        pass
+    def sacar(self, valor):
+        if valor > 0 and valor <= self.__saldo:
+            self.__saldo -= valor
+            return True
+        else:
+            return False
 
     def cobrar_tarifa(self):
         super().sacar(self.__tarifa_mensal)    
 
     def exibir_dados(self):
-        return f'CONTA:\nTitular: {self.__titular.get_nome()}\nNumero da conta: {self.__numero}\n Limite disponivel: {self.__limite}\n Tarifa Mensal:{self.__tarifa_mensal}'
-    
+        return f'{super().exibir_dados()}\nLimite disponivel: {self.__limite}\nTarifa Mensal:{self.__tarifa_mensal}'
+
+cliente1=Cliente("Helia",89076543212,Endereço("Rua Chico",123,"Centro","CM"))
+tinoco= ContaCorrente(cliente1,45436362,1000,200,50)
+tinoco.exibir_dados()
+
+
 class ContaPoupaca(ContaBancaria):
     def __init__(self, titular, numero, saldo,taxa_rendimento):
         super().__init__(titular, numero, saldo)
@@ -128,9 +137,14 @@ class ContaPoupaca(ContaBancaria):
     # saldo x taxa
 
     def exibir_dados(self):
-        pass
+         return f'{super().exibir_dados()}\nLimite disponivel: {self.__limite}\nTarifa Mensal:{self.__tarifa_mensal}'
+
+cliente2=Cliente("Helia",89076543212,Endereço("Rua Chico",123,"Centro","CM"))
+titico= ContaCorrente(cliente2,45436362,1000,200,50)
+titico.exibir_dados()
 
 class ContaSalario(ContaBancaria):
+
     def __init__(self, titular, numero, saldo,empresa,saques_realizados,limite_saques):
         super().__init__(titular, numero, saldo)
         self.__empresa=empresa
@@ -151,3 +165,5 @@ class ContaSalario(ContaBancaria):
 
     def exibir_dados(self):
         pass
+
+
