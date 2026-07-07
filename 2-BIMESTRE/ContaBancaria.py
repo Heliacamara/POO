@@ -122,10 +122,6 @@ class ContaCorrente(ContaBancaria):
     def exibir_dados(self):
         return f'{super().exibir_dados()}\nLimite disponivel: {self.__limite}\nTarifa Mensal:{self.__tarifa_mensal}'
 
-cliente1=Cliente("Helia",89076543212,Endereço("Rua Chico",123,"Centro","CM"))
-tinoco= ContaCorrente(cliente1,45436362,1000,200,50)
-tinoco.exibir_dados()
-
 
 class ContaPoupaca(ContaBancaria):
     def __init__(self, titular, numero, saldo,taxa_rendimento):

@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox, simpledialog
-from ContaBancaria import Cliente,ContaBancaria,Endereço,ContaCorrente
+from ContaBancaria import Cliente,ContaBancaria,Endereço,ContaCorrente,ContaPoupaca,ContaSalario
 
 class BancoApp:
     def __init__(self, janela):
@@ -15,9 +15,9 @@ class BancoApp:
 
         self.contas = [
             ContaCorrente(cliente1, 1001, 500,200,50),
-            ContaBancaria(cliente2, 1002, 1000),
             ContaBancaria(cliente3, 1003, 300),
-            ContaBancaria(cliente4, 1004, 20)
+            ContaBancaria(cliente4, 1004, 20),
+            ContaBancaria(cliente2, 1002, 1000)
         ]
 
         if(self.contas[0].verificar_conta_duplicada()):
@@ -34,6 +34,16 @@ class BancoApp:
             font=("Arial", 18, "bold")
         )
         titulo.pack(pady=15)
+
+        btn_depositar = tk.Button(
+                janela,
+                text="Criar Conta",
+                width=15,
+                command=lambda:  self.criar_conta()
+            )
+        # btn_depositar.config(state="disabled")
+        btn_depositar.pack(pady=2)
+
 
         self.frame_contas = tk.Frame(self.janela)
         self.frame_contas.pack()
@@ -189,6 +199,100 @@ class BancoApp:
     def exibir_dados(self, conta):
         messagebox.showinfo("Dados da Conta", conta.exibir_dados())
 
+
+    def criar_conta(self):
+        janela_cadastro = tk.Toplevel(self.janela)
+        janela_cadastro.title("Criar nova conta")
+        janela_cadastro.geometry("300x500")
+        janela_cadastro.resizable(False, False)
+
+        tk.Label(janela_cadastro, text="Titular:").pack(pady=5)
+        entrada_titular = tk.Entry(janela_cadastro)
+        entrada_titular.pack()
+
+        tk.Label(janela_cadastro, text="Número da conta:").pack(pady=5)
+        entrada_numero = tk.Entry(janela_cadastro)
+        entrada_numero.pack()
+
+        tk.Label(janela_cadastro, text="Saldo inicial:").pack(pady=5)
+        entrada_saldo = tk.Entry(janela_cadastro)
+        entrada_saldo.pack()
+
+        tk.Label(janela_cadastro, text="CPF:").pack(pady=5)
+        entrada_CPF= tk.Entry(janela_cadastro)
+        entrada_CPF.pack()
+
+        tk.Label(janela_cadastro, text="Rua:").pack(pady=5)
+        entrada_Rua = tk.Entry(janela_cadastro)
+        entrada_Rua.pack()
+
+        tk.Label(janela_cadastro, text="Número:").pack(pady=5)
+        entrada_NumeroCasa = tk.Entry(janela_cadastro)
+        entrada_NumeroCasa.pack()
+
+        tk.Label(janela_cadastro, text="Bairro:").pack(pady=5)
+        entrada_Bairro = tk.Entry(janela_cadastro)
+        entrada_Bairro.pack()
+
+        tk.Label(janela_cadastro, text="Cidade:").pack(pady=5)
+        entrada_Cidade = tk.Entry(janela_cadastro)
+        entrada_Cidade.pack()
+
+        tk.Label(janela_cadastro, text="Tipo de Conta:").pack(pady=5)
+        entrada_TipoConta = tk.Entry(janela_cadastro)
+        entrada_TipoConta.pack()
+
+        def salvar_conta():
+            titular = entrada_titular.get()
+            numero = entrada_numero.get()
+            saldo = entrada_saldo.get()
+            cpf= entrada_CPF.get()
+            rua= entrada_Rua.get()
+            numeroCasa= entrada_NumeroCasa.get()
+            bairro= entrada_Bairro.get()
+            cidade= entrada_Cidade.get()
+            tipoConta= entrada_TipoConta.get()
+
+            if titular == "" or numero == "" or saldo == "" or cpf == "" or rua == "" or numeroCasa == "" or bairro == "" or cidade == "":
+                messagebox.showerror("Erro", "Preencha todos os campos.")
+                return
+
+            try:
+                numero = int(numero)
+                saldo = float(saldo)
+            except ValueError:
+                messagebox.showerror("Erro", "Número da conta e saldo devem ser valores numéricos.")
+                return
+
+
+
+            cliente=Cliente(titular,cpf, Endereço(rua,numeroCasa,bairro,cidade))
+
+            if tipoConta == "Bancário":
+                nova_conta = ContaBancaria(cliente, numero, saldo)
+                self.contas.append(nova_conta)
+
+            elif tipoConta == "Corrente":
+                nova_conta= ContaCorrente(cliente ,numero, saldo,)
+                self.contas.append(nova_conta)
+
+            elif tipoConta == "Poupança":
+                nova_conta = ContaPoupaca(cliente,numero,saldo)
+                self.contas.append(nova_conta)       
+
+
+            messagebox.showinfo("Sucesso", "Conta criada com sucesso.")
+
+            janela_cadastro.destroy()
+            self.atualizar_tela()
+
+        btn_salvar = tk.Button(
+            janela_cadastro,
+            text="Salvar conta",
+            width=15,
+            command=salvar_conta
+        )
+        btn_salvar.pack(pady=15)
 
 janela = tk.Tk()
 app = BancoApp(janela)
