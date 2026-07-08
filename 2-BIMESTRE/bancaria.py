@@ -15,7 +15,7 @@ class BancoApp:
 
         self.contas = [
             ContaCorrente(cliente1, 1001, 500,200,50),
-            ContaBancaria(cliente3, 1003, 300),
+            ContaPoupaca(cliente3, 1003, 300,0.1),
             ContaBancaria(cliente4, 1004, 20),
             ContaBancaria(cliente2, 1002, 1000)
         ]
@@ -198,7 +198,21 @@ class BancoApp:
 
     def exibir_dados(self, conta):
         messagebox.showinfo("Dados da Conta", conta.exibir_dados())
-
+    
+    def render_juros(self, conta):
+        if(conta.get_tipo_conta() == "Conta Poupança"):
+            conta.render_juros()
+            messagebox.showinfo("Sucesso", "Rendimento efetuado.")
+        else:
+            messagebox.showerror("Erro", "Conta não disponibiliza rendimento")
+        self.atualizar_tela()
+    
+    def cobrar_taxa(self, conta):
+        if(conta.get_tipo_conta() == "Conta Corrente"):
+            conta.cobrar_taxa()
+            messagebox.showerror("Sucesso", "Rendimento efetuado.")
+        else:
+            messagebox.showerror("Erro", "Cobrança invalida para essa conta")
 
     def criar_conta(self):
         janela_cadastro = tk.Toplevel(self.janela)
@@ -268,11 +282,25 @@ class BancoApp:
 
             cliente=Cliente(titular,cpf, Endereço(rua,numeroCasa,bairro,cidade))
 
-            if tipoConta == "Bancário":
+            if tipoConta == "Bancária":
                 nova_conta = ContaBancaria(cliente, numero, saldo)
                 self.contas.append(nova_conta)
 
             elif tipoConta == "Corrente":
+                janela_cadastro = tk.Toplevel(self.janela)
+                janela_cadastro.title("Criar nova conta")
+                janela_cadastro.geometry("300x500")
+                janela_cadastro.resizable(False, False)
+
+                tk.Label(janela_cadastro, text="Limite:").pack(pady=5)
+                entrada_titular = tk.Entry(janela_cadastro)
+                entrada_titular.pack()
+
+                tk.Label(janela_cadastro, text="Tarifa mensal:").pack(pady=5)
+                entrada_numero = tk.Entry(janela_cadastro)
+                entrada_numero.pack()
+
+
                 nova_conta= ContaCorrente(cliente ,numero, saldo,)
                 self.contas.append(nova_conta)
 
@@ -280,6 +308,9 @@ class BancoApp:
                 nova_conta = ContaPoupaca(cliente,numero,saldo)
                 self.contas.append(nova_conta)       
 
+            elif tipoConta == "Salário":
+                nova_conta = ContaSalario(cliente,numero,saldo)
+                self.contas.append(nova_conta)
 
             messagebox.showinfo("Sucesso", "Conta criada com sucesso.")
 

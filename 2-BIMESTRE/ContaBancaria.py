@@ -109,15 +109,16 @@ class ContaCorrente(ContaBancaria):
         self.__limite=limite
         self.__tarifa_mensal=tarifa_mensal
 
-    def sacar(self, valor):
-        if valor > 0 and valor <= self.__saldo:
-            self.__saldo -= valor
+    def sacar(self,valor:float) -> float: 
+        if valor <= (self.__limite + self._ContaBancaria__saldo) and self._ContaBancaria__saldo >= -(self.__limite):
+            self._ContaBancaria__saldo -= valor
             return True
         else:
             return False
-
-    def cobrar_tarifa(self):
-        super().sacar(self.__tarifa_mensal)    
+    def cobrar_taxa(self):
+        self.sacar(self.__tarifa_mensal)
+    def get_tipo_conta(self):
+        return "Conta Corrente" 
 
     def exibir_dados(self):
         return f'{super().exibir_dados()}\nLimite disponivel: {self.__limite}\nTarifa Mensal:{self.__tarifa_mensal}'
@@ -128,9 +129,11 @@ class ContaPoupaca(ContaBancaria):
         super().__init__(titular, numero, saldo)
         self.__taxa_rendimento=taxa_rendimento
 
+    def get_tipo_conta(self):
+        return 'Conta Poupança'
     def render_juros(self):
-        pass
-    # saldo x taxa
+        self._ContaBancaria__saldo += self.__taxa_rendimento * self._ContaBancaria__saldo
+        return None
 
     def exibir_dados(self):
          return f'{super().exibir_dados()}\nLimite disponivel: {self.__limite}\nTarifa Mensal:{self.__tarifa_mensal}'
