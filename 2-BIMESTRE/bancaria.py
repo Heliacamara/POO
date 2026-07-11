@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox, simpledialog
-from ContaBancaria import Cliente,ContaBancaria,Endereço,ContaCorrente,ContaPoupaca,ContaSalario
+from ContaBancaria import Cliente,ContaBancaria,Endereço,ContaCorrente,ContaPoupanca,ContaSalario
 
 class BancoApp:
     def __init__(self, janela):
@@ -15,7 +15,7 @@ class BancoApp:
 
         self.contas = [
             ContaCorrente(cliente1, 1001, 500,200,50),
-            ContaPoupaca(cliente3, 1003, 300,0.1),
+            ContaPoupanca(cliente3, 1003, 300,0.1),
             ContaBancaria(cliente4, 1004, 20),
             ContaBancaria(cliente2, 1002, 1000)
         ]
