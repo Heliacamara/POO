@@ -43,7 +43,6 @@ class Cliente:
     def exibir_dados(self):
         return f'Nome: {self.__nome}\nCPF: {self.__cpf}\n{self.__endereco.exibir_dados()}'
 
-
     def possui_contas(self):
         if len(self.__contas)==1 or len(self.__contas)>1:
             return True
@@ -51,7 +50,17 @@ class Cliente:
             return False
 
     def buscar_conta(self,numero):
-        pass
+        for conta in self.__contas:
+            if conta.get_numero()==numero:
+                return conta
+
+        return None
+
+    def consultar_saldo_total(self):
+        total=0
+        for conta in self.__contas:    
+                total= total + conta.get_saldo()
+        return total
 
 class ContaBancaria:
 
@@ -115,6 +124,7 @@ class ContaBancaria:
             f'ENDEREÇO\n'
             f'{self.__titular.get_endereco().exibir_dados()}'
         )
+    
 
 
 class ContaCorrente(ContaBancaria):
@@ -210,6 +220,22 @@ class ContaSalario(ContaBancaria):
             f'Limite de saques: {self.__limite_saques}'
         )
 
+class ContaUniversitaria(ContaBancaria):
+    def __init__(self, titular, numero, saldo):
+        super().__init__(titular, numero, saldo)
+
+    def get_tipo_conta(self):
+        return "Conta Univeritaria"
+
+    def sacar(self, valor):
+        if valor <= 500:
+            return super().sacar(valor)
+
+        return False
+
+
+
+#testando possuir conta
 endereco=Endereço("Rua A", 10, "Centro", "Natal")
 
 cliente=Cliente("Maria", "12345678900", endereco)
@@ -221,3 +247,60 @@ conta = ContaCorrente(cliente, 1, 1000, 500, 20)
 cliente.adicionar_conta(conta)
 
 print(cliente.possui_contas())
+
+
+#testando consultar saldo
+cliente = Cliente("Maria", "12345678900", endereco)
+
+conta1 = ContaCorrente(cliente, 101, 500, 200, 10)
+conta2 = ContaPoupanca(cliente, 202, 1000, 0.02)
+
+cliente.adicionar_conta(conta1)
+cliente.adicionar_conta(conta2)
+
+print(cliente.consultar_saldo_total())
+
+#testar Conta Universitaria
+# Criando endereço
+endereco = Endereço("Rua A", 100, "Centro", "Natal")
+
+# Criando cliente
+cliente = Cliente("Maria", "12345678900", endereco)
+
+# Criando conta universitária com saldo de 1000
+conta_uni = ContaUniversitaria(cliente, 101, 1000)
+
+# Adicionando conta ao cliente
+cliente.adicionar_conta(conta_uni)
+
+
+# Teste 1 - Ver tipo da conta
+print(conta_uni.get_tipo_conta())
+
+
+# Teste 2 - Saque permitido (menor que 500)
+resultado = conta_uni.sacar(300)
+
+print("Saque de 300:", resultado)
+print("Saldo atual:", conta_uni.get_saldo())
+
+
+# Teste 3 - Saque no limite máximo
+resultado = conta_uni.sacar(500)
+
+print("Saque de 500:", resultado)
+print("Saldo atual:", conta_uni.get_saldo())
+
+
+# Teste 4 - Saque acima do limite
+resultado = conta_uni.sacar(600)
+
+print("Saque de 600:", resultado)
+print("Saldo atual:", conta_uni.get_saldo())
+
+
+# Teste 5 - Saque maior que o saldo disponível
+resultado = conta_uni.sacar(1000)
+
+print("Saque de 1000:", resultado)
+print("Saldo atual:", conta_uni.get_saldo())
