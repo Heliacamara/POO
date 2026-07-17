@@ -234,7 +234,6 @@ class ContaUniversitaria(ContaBancaria):
         return False
 
 
-
 #testando possuir conta
 endereco=Endereço("Rua A", 10, "Centro", "Natal")
 
@@ -249,6 +248,22 @@ cliente.adicionar_conta(conta)
 print(cliente.possui_contas())
 
 
+#testando buscar conta
+endereco = Endereço("Rua A", 10, "Centro", "Natal")
+cliente = Cliente("Maria", "12345678900", endereco)
+
+cliente.adicionar_conta(ContaBancaria(cliente, 1, 100))
+cliente.adicionar_conta(ContaBancaria(cliente, 2, 200))
+cliente.adicionar_conta(ContaBancaria(cliente, 3, 300))
+
+conta = cliente.buscar_conta(2)
+
+if conta:
+    print("Conta encontrada:", conta.get_numero())
+else:
+    print("Conta não encontrada")
+
+
 #testando consultar saldo
 cliente = Cliente("Maria", "12345678900", endereco)
 
@@ -260,11 +275,9 @@ cliente.adicionar_conta(conta2)
 
 print(cliente.consultar_saldo_total())
 
-#testar Conta Universitaria
-# Criando endereço
-endereco = Endereço("Rua A", 100, "Centro", "Natal")
 
-# Criando cliente
+#testar Conta Universitaria
+endereco = Endereço("Rua A", 100, "Centro", "Natal")
 cliente = Cliente("Maria", "12345678900", endereco)
 
 # Criando conta universitária com saldo de 1000
@@ -272,7 +285,6 @@ conta_uni = ContaUniversitaria(cliente, 101, 1000)
 
 # Adicionando conta ao cliente
 cliente.adicionar_conta(conta_uni)
-
 
 # Teste 1 - Ver tipo da conta
 print(conta_uni.get_tipo_conta())
