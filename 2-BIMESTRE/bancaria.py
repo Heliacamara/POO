@@ -280,7 +280,7 @@ class BancoApp:
 
 
 
-            cliente=Cliente(titular,cpf, Endereço(rua,numeroCasa,bairro,cidade))
+            cliente=Cliente(titular,cpf, Endereco(rua,numeroCasa,bairro,cidade))
 
             if tipoConta == "Bancária":
                 nova_conta = ContaBancaria(cliente, numero, saldo)
@@ -305,7 +305,7 @@ class BancoApp:
                 self.contas.append(nova_conta)
 
             elif tipoConta == "Poupança":
-                nova_conta = ContaPoupaca(cliente,numero,saldo)
+                nova_conta = ContaPoupanca(cliente,numero,saldo)
                 self.contas.append(nova_conta)       
 
             elif tipoConta == "Salário":
