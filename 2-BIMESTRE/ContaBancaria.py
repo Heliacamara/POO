@@ -1,4 +1,4 @@
-class Endereço:
+class Endereco:
     def __init__(self, rua, numero, bairro, cidade):
         self.__rua = rua
         self.__numero = int(numero)
@@ -210,7 +210,7 @@ class ContaSalario(ContaBancaria):
             f'Limite de saques: {self.__limite_saques}'
         )
 
-endereco=Endereço("Rua A", 10, "Centro", "Natal")
+endereco=Endereco("Rua A", 10, "Centro", "Natal")
 
 cliente=Cliente("Maria", "12345678900", endereco)
 

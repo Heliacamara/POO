@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox, simpledialog
-from ContaBancaria import Cliente,ContaBancaria,Endereço,ContaCorrente,ContaPoupanca,ContaSalario
+from ContaBancaria import Cliente,ContaBancaria,Endereco,ContaCorrente,ContaPoupanca,ContaSalario
 
 class BancoApp:
     def __init__(self, janela):
@@ -8,10 +8,10 @@ class BancoApp:
         self.janela.title("Sistema Bancário - POO em Python")
         self.janela.geometry("850x400")
 
-        cliente1 = Cliente('Helia', '164.913', Endereço("Rua zumbi", "834", "centro", "Ceara-mirim"))
-        cliente2 = Cliente('Vitor', '124.248', Endereço("Rua Lagos", "29", "centro", "Ceara-mirim"))
-        cliente3 = Cliente('Giovanna', '943.135', Endereço("Rua Mosquito", "128", "centro", "Ceara-mirim"))
-        cliente4 = Cliente('Bernardo', '517.925', Endereço("Rua do Farol", "724", "centro", "Ceara-mirim"))
+        cliente1 = Cliente('Helia', '164.913', Endereco("Rua zumbi", "834", "centro", "Ceara-mirim"))
+        cliente2 = Cliente('Vitor', '124.248', Endereco("Rua Lagos", "29", "centro", "Ceara-mirim"))
+        cliente3 = Cliente('Giovanna', '943.135', Endereco("Rua Mosquito", "128", "centro", "Ceara-mirim"))
+        cliente4 = Cliente('Bernardo', '517.925', Endereco("Rua do Farol", "724", "centro", "Ceara-mirim"))
 
         self.contas = [
             ContaCorrente(cliente1, 1001, 500,200,50),
