@@ -22,10 +22,10 @@ class Endereco:
 
 
 class Cliente:
-    def __init__(self, nome, cpf, endereco):
+    def __init__(self,nome,cpf,rua,numero,bairro,cidade):
         self.__nome = nome
-        self.__cpf = cpf
-        self.__endereco = endereco
+        self.__cpf = cpf 
+        self.__endereco = Endereco(rua,numero,bairro,cidade)
         self.__contas = []
 
     def get_nome(self):
@@ -54,66 +54,64 @@ class Cliente:
         pass
 
 class ContaBancaria:
-
     numeros_contas = []
-
-    def __init__(self, titular, numero, saldo):
-        self.__titular = titular
-        self.__numero = numero
+    contas_duplicada = []
+    def __init__(self,cliente,numero,saldo):
+        self.__cliente = cliente 
+        self.__numero =  numero
         self.__saldo = saldo
-        ContaBancaria.numeros_contas.append(numero)
-
-    def get_titular(self):
-        return self.__titular.get_nome()
-
+        ContaBancaria.numeros_contas.append(self.__numero)
+    @classmethod
+    def existe_conta_duplicada(cls):
+        return len(cls.numeros_contas) != len(set(cls.numeros_contas))
+    @classmethod
+    def contas_duplicadas(cls):
+        vistos = set()
+        for numero in cls.numeros_contas:
+            if numero in vistos:
+                cls.contas_duplicada.append(numero)
+            else:
+                vistos.add(numero)
+        return cls.contas_duplicada
+    def get_cliente(self):
+        return self.__cliente
+    
     def get_numero(self):
         return self.__numero
 
-    def get_tipo_conta(self):
-        return "Conta Bancária"
-
     def get_saldo(self):
         return self.__saldo
-
-    @classmethod
-    def verificar_conta_duplicada(cls):
-        return len(cls.numeros_contas) != len(set(cls.numeros_contas))
-
-    @classmethod
-    def contas_duplicadas(cls):
-        repetidos = set()
-        for numero in cls.numeros_contas:
-            if cls.numeros_contas.count(numero) > 1:
-                repetidos.add(numero)
-        return repetidos
-
-    def depositar(self, valor):
-        if valor > 0:
-            self.__saldo += valor
-            return True
-        return False
-
-    def sacar(self, valor):
-        if valor > 0 and valor <= self.__saldo:
+    def set_saldo(self,valor):
+        self.__saldo = valor 
+        
+    
+    def get_tipo_conta(self):
+        return "Conta Bancária"
+    def depositar(self,valor):
+        self.__saldo += valor
+        return True
+    def sacar(self,valor):
+        if self.__saldo >= valor:
             self.__saldo -= valor
             return True
-        return False
-
-    def transferir(self, valor, conta_destino):
-        if self.sacar(valor):
-            conta_destino.depositar(valor)
-            return True
-        return False
+        else:
+            return False
+    def transferir(self,valor,destino):
+            if self.sacar(valor):
+                destino.depositar(valor)
+                return True
+            else:
+                return False
 
     def exibir_dados(self):
         return (
             f'CONTA\n'
-            f'Titular: {self.__titular.get_nome()}\n'
+            f'Titular: {self.__cliente.get_nome()}\n'
             f'Numero: {self.__numero}\n'
             f'Saldo: R$ {self.__saldo}\n'
-            f'CPF: {self.__titular.get_cpf()}\n\n'
+            f'CPF: {self.__cliente.get_cpf()}\n\n'
             f'ENDEREÇO\n'
-            f'{self.__titular.get_endereco().exibir_dados()}'
+            f'{self.__cliente.get_endereco().exibir_dados()}'
         )
 
 
@@ -210,14 +208,14 @@ class ContaSalario(ContaBancaria):
             f'Limite de saques: {self.__limite_saques}'
         )
 
-endereco=Endereco("Rua A", 10, "Centro", "Natal")
+# endereco=Endereco("Rua A", 10, "Centro", "Natal")
 
-cliente=Cliente("Maria", "12345678900", endereco)
+# cliente=Cliente("Maria", "12345678900", endereco)
 
-print(cliente.possui_contas())
+# print(cliente.possui_contas())
 
-conta = ContaCorrente(cliente, 1, 1000, 500, 20)
+# conta = ContaCorrente(cliente, 1, 1000, 500, 20)
 
-cliente.adicionar_conta(conta)
+# cliente.adicionar_conta(conta)
 
-print(cliente.possui_contas())
+# print(cliente.possui_contas())
