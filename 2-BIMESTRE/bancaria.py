@@ -446,3 +446,21 @@ class BancoApp:
 janela = tk.Tk()
 app = BancoApp(janela)
 janela.mainloop()
+
+
+#Ao final, explique quais métodos da classe ContaBancaria foram utilizados pela interface gráfica.
+#RESPOSTA:
+#A interface gráfica utiliza diversos métodos da classe ContaBancaria para realizar as operações bancárias e exibir informações ao usuário. Os principais são:
+
+#depositar(valor): realiza um depósito na conta quando o usuário clica no botão Depositar.
+#sacar(valor): efetua um saque na conta ao clicar no botão Sacar, verificando se há saldo suficiente.
+#transferir(valor, conta_destino): transfere um valor da conta de origem para outra conta escolhida pelo usuário.
+#exibir_dados(): exibe todas as informações da conta (titular, número, saldo, CPF e endereço) na janela de detalhes.
+#get_titular(): retorna o nome do titular da conta para ser mostrado na interface.
+#get_numero(): retorna o número da conta, utilizado para identificação e nas transferências.
+#get_saldo(): retorna o saldo atual da conta, permitindo que a interface o mantenha atualizado.
+#get_tipo_conta(): informa o tipo da conta (Conta Bancária, Conta Corrente, Conta Poupança, Conta Salário ou Conta Universitária), sendo utilizado para exibir essa informação e habilitar ou desabilitar funcionalidades específicas.
+#verificar_conta_duplicada(): verifica se existem contas com números repetidos durante a inicialização do sistema.
+#contas_duplicadas(): retorna os números das contas duplicadas para informar o usuário, caso existam.
+
+#Além desses métodos da classe ContaBancaria, a interface também utiliza métodos específicos das subclasses, como render_juros() da ContaPoupanca e cobrar_tarifa() (ou cobrar_taxa(), conforme a implementação) da ContaCorrente, para realizar operações exclusivas desses tipos de conta.
