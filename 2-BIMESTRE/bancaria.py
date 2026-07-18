@@ -162,6 +162,13 @@ class BancoApp:
             else:
                 btn_salario.config(state="disabled")
             btn_salario.pack(pady=2)
+            btn_contas = tk.Button(
+                frame,
+                text="Contas do Cliente",
+                width=15,
+                command=lambda conta=conta: self.contas_cliente(conta)
+            )
+            btn_contas.pack(pady=2)
 
 
     def depositar(self, conta):
@@ -253,6 +260,19 @@ class BancoApp:
         else:
             messagebox.showerror("Erro", "Conta não recebe Salário")
         self.atualizar_tela()
+    def contas_cliente(self, conta):
+        cliente = conta.get_cliente()
+
+        texto = ""
+
+        for conta in self.contas:
+            if conta.get_cliente().get_cpf() == cliente.get_cpf():
+                texto += (
+                    f"{conta.get_tipo_conta()} - "
+                    f"Conta {conta.get_numero()} - "
+                    f"Saldo: R${conta.get_saldo():.2f}\n"
+                )
+        messagebox.showinfo("Contas do Cliente", texto)
     def criar_conta(self):
         janela_cadastro = tk.Toplevel(self.janela)
         janela_cadastro.title("Criar Nova Conta")
